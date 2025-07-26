@@ -1,2 +1,188 @@
-# prueba-
-prueba de un sitio web 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teknovae - Contacto</title>
+    <!-- Incluir Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuración de la fuente Inter para todo el cuerpo -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Estilos personalizados para el scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Estilos para el menú móvil */
+        .mobile-menu {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(100%); /* Oculta el menú fuera de la pantalla inicialmente */
+        }
+        .mobile-menu.is-open {
+            transform: translateX(0); /* Desliza el menú a la vista */
+        }
+    </style>
+    <!-- Incluir iconos de Lucide (para un toque moderno) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen">
+
+    <!-- Encabezado de la Página -->
+    <header class="bg-white shadow-lg p-4 sticky top-0 z-10">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Enlace del logo a la página de inicio -->
+            <h1 class="text-3xl font-extrabold text-indigo-700">
+                <a href="index.html" class="hover:text-indigo-600 transition duration-300">Teknovae</a>
+            </h1>
+            <!-- Menú de navegación para escritorio -->
+            <nav class="hidden md:block">
+                <ul class="flex space-x-4">
+                    <li><a href="index.html#home" class="text-gray-600 text-sm hover:text-indigo-600 transition duration-300 font-normal">Inicio</a></li>
+                    <li><a href="index.html#features" class="text-gray-600 text-sm hover:text-indigo-600 transition duration-300 font-normal">Características</a></li>
+                    <li><a href="index.html#products" class="text-gray-600 text-sm hover:text-indigo-600 transition duration-300 font-normal">Productos</a></li>
+                    <li><a href="index.html#location" class="text-gray-600 text-sm hover:text-indigo-600 transition duration-300 font-normal">Ubicación</a></li>
+                    <li><a href="index.html#about" class="text-gray-600 text-sm hover:text-indigo-600 transition duration-300 font-normal">Sobre Nosotros</a></li>
+                    <li><a href="contact.html" class="text-gray-600 text-sm hover:text-indigo-600 transition duration-300 font-normal">Contacto</a></li>
+                </ul>
+            </nav>
+            <!-- Botón de menú hamburguesa para móvil -->
+            <button id="mobile-menu-button" class="md:hidden p-2 text-gray-600 hover:text-indigo-600 focus:outline-none">
+                <i data-lucide="menu" class="w-8 h-8"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Menú Móvil (oculto por defecto) -->
+    <div id="mobile-menu" class="mobile-menu fixed inset-0 bg-white z-50 flex-col items-center justify-center space-y-8 text-xl hidden">
+        <button id="close-mobile-menu" class="absolute top-4 right-4 p-2 text-gray-600 hover:text-indigo-600 focus:outline-none">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+        <ul class="flex flex-col space-y-6 text-center">
+            <li><a href="index.html#home" class="text-gray-800 hover:text-indigo-600 transition duration-300 font-semibold text-2xl" onclick="closeMobileMenu()">Inicio</a></li>
+            <li><a href="index.html#features" class="text-gray-800 hover:text-indigo-600 transition duration-300 font-semibold text-2xl" onclick="closeMobileMenu()">Características</a></li>
+            <li><a href="index.html#products" class="text-gray-800 hover:text-indigo-600 transition duration-300 font-semibold text-2xl" onclick="closeMobileMenu()">Productos</a></li>
+            <li><a href="index.html#location" class="text-gray-800 hover:text-indigo-600 transition duration-300 font-semibold text-2xl" onclick="closeMobileMenu()">Ubicación</a></li>
+            <li><a href="index.html#about" class="text-gray-800 hover:text-indigo-600 transition duration-300 font-semibold text-2xl" onclick="closeMobileMenu()">Sobre Nosotros</a></li>
+            <li><a href="contact.html" class="text-gray-800 hover:text-indigo-600 transition duration-300 font-semibold text-2xl" onclick="closeMobileMenu()">Contacto</a></li>
+        </ul>
+    </div>
+
+    <!-- Contenido Principal - Sección de Contacto -->
+    <main class="container mx-auto p-6 flex-grow">
+        <section id="contact" class="bg-white rounded-xl shadow-xl p-10 mb-20 border border-gray-200">
+            <h2 class="text-4xl font-extrabold text-center text-gray-800 mb-10">Ponte en Contacto con Nosotros</h2>
+            <div class="flex flex-col md:flex-row gap-10">
+                <!-- Información de Contacto -->
+                <div class="md:w-1/2 space-y-6 text-lg text-gray-700">
+                    <p class="flex items-center space-x-3">
+                        <i data-lucide="map-pin" class="w-7 h-7 text-indigo-600 flex-shrink-0"></i>
+                        <span>Avenida Siempre Viva 742, Springfield, Anytown, 12345</span>
+                    </p>
+                    <p class="flex items-center space-x-3">
+                        <i data-lucide="phone" class="w-7 h-7 text-indigo-600 flex-shrink-0"></i>
+                        <span>+1 (555) 123-4567</span>
+                    </p>
+                    <p class="flex items-center space-x-3">
+                        <i data-lucide="mail" class="w-7 h-7 text-indigo-600 flex-shrink-0"></i>
+                        <span>info@teknovae.com</span>
+                    </p>
+                    <div class="pt-4">
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-3">Horario de Atención:</h3>
+                        <p>Lunes a Viernes: 9:00 AM - 7:00 PM</p>
+                        <p>Sábados: 10:00 AM - 4:00 PM</p>
+                        <p>Domingos: Cerrado</p>
+                    </div>
+                    <div class="mt-8">
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-3">Síguenos en Redes:</h3>
+                        <div class="flex space-x-4 justify-center md:justify-start">
+                            <a href="#" class="text-gray-600 hover:text-indigo-600 transition duration-300"><i data-lucide="facebook" class="w-8 h-8"></i></a>
+                            <a href="#" class="text-gray-600 hover:text-indigo-600 transition duration-300"><i data-lucide="instagram" class="w-8 h-8"></i></a>
+                            <a href="#" class="text-gray-600 hover:text-indigo-600 transition duration-300"><i data-lucide="twitter" class="w-8 h-8"></i></a>
+                            <a href="#" class="text-gray-600 hover:text-indigo-600 transition duration-300"><i data-lucide="linkedin" class="w-8 h-8"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formulario de Contacto -->
+                <div class="md:w-1/2">
+                    <form class="space-y-6">
+                        <div>
+                            <label for="contact-name" class="block text-gray-700 text-lg font-semibold mb-2">Nombre Completo:</label>
+                            <input type="text" id="contact-name" name="name" class="shadow-sm appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="Tu Nombre" required>
+                        </div>
+                        <div>
+                            <label for="contact-email" class="block text-gray-700 text-lg font-semibold mb-2">Correo Electrónico:</label>
+                            <input type="email" id="contact-email" name="email" class="shadow-sm appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="tu@email.com" required>
+                        </div>
+                        <div>
+                            <label for="contact-subject" class="block text-gray-700 text-lg font-semibold mb-2">Asunto:</label>
+                            <input type="text" id="contact-subject" name="subject" class="shadow-sm appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="Motivo de tu consulta">
+                        </div>
+                        <div>
+                            <label for="contact-message" class="block text-gray-700 text-lg font-semibold mb-2">Tu Mensaje:</label>
+                            <textarea id="contact-message" name="message" rows="6" class="shadow-sm appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="Escribe aquí tu mensaje..." required></textarea>
+                        </div>
+                        <div class="flex justify-center">
+                            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-10 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                Enviar Mensaje
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Pie de Página -->
+    <footer class="bg-gray-900 text-white p-8 mt-16">
+        <div class="container mx-auto text-center">
+            <p class="text-lg mb-4">&copy; 2024 Teknovae. Todos los derechos reservados.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i data-lucide="facebook" class="w-7 h-7"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i data-lucide="instagram" class="w-7 h-7"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i data-lucide="twitter" class="w-7 h-7"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i data-lucide="linkedin" class="w-7 h-7"></i></a>
+            </div>
+            <p class="text-sm text-gray-500 mt-6">Diseñado con pasión por la tecnología.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Inicializar iconos de Lucide al cargar el DOM
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+
+            // Lógica del menú móvil
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const closeMobileMenuButton = document.getElementById('close-mobile-menu');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.classList.add('flex', 'is-open');
+            });
+
+            function closeMobileMenu() {
+                mobileMenu.classList.remove('flex', 'is-open');
+                mobileMenu.classList.add('hidden');
+            }
+            window.closeMobileMenu = closeMobileMenu; // Hacerla global para los enlaces del menú
+            closeMobileMenuButton.addEventListener('click', closeMobileMenu);
+        });
+    </script>
+</body>
+</html>
