@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teknovae - Detalle de Producto</title>
+    <!-- Incluir Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuración de la fuente Inter para todo el cuerpo -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Estilos personalizados para el scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+    <!-- Incluir iconos de Lucide (para un toque moderno) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen">
+
+    <!-- Encabezado de la Página -->
+    <header class="bg-white shadow-lg p-4 sticky top-0 z-10">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-3xl font-extrabold text-indigo-700">Teknovae</h1>
+            <nav>
+                <ul class="flex space-x-4">
+                    <li><a href="index.html#products" class="text-gray-600 text-sm hover:text-indigo-600 transition duration-300 font-normal">Volver a Productos</a></li>
+                    <li><a href="index.html#home" class="text-gray-600 text-sm hover:text-indigo-600 transition duration-300 font-normal">Inicio</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contenido Principal - Detalle del Producto -->
+    <main class="container mx-auto p-6 flex-grow">
+        <section class="bg-white rounded-xl shadow-xl p-8 mb-8 flex flex-col md:flex-row items-center md:items-start gap-8">
+            <!-- Imagen del Producto -->
+            <div class="md:w-1/2 flex justify-center items-center p-4 bg-gray-100 rounded-lg">
+                <img src="https://placehold.co/600x450/e0e7ff/4338ca?text=Laptop+Pro+Detail" alt="Laptop Ultrabook Pro" class="max-w-full h-auto rounded-lg shadow-md">
+            </div>
+
+            <!-- Detalles del Producto -->
+            <div class="md:w-1/2 p-4">
+                <h2 class="text-4xl font-extrabold text-gray-800 mb-4">Laptop Ultrabook Pro</h2>
+                <p class="text-indigo-600 text-3xl font-bold mb-6">$1,499.99</p>
+                <p class="text-gray-700 text-lg leading-relaxed mb-8">
+                    La Laptop Ultrabook Pro combina un diseño elegante con un rendimiento excepcional, ideal para profesionales que buscan eficiencia y portabilidad. Equipada con el último procesador Intel Core i7, 16GB de RAM y un SSD de 512GB, ofrece una experiencia fluida para multitareas, edición de video y más. Su pantalla Full HD de 14 pulgadas con bordes delgados y su batería de larga duración te permiten trabajar o entretenerte durante horas sin interrupciones.
+                </p>
+                <ul class="text-gray-600 text-base mb-8 space-y-2">
+                    <li class="flex items-center space-x-2"><i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i><span>Procesador Intel Core i7 de última generación</span></li>
+                    <li class="flex items-center space-x-2"><i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i><span>16GB RAM DDR4 y 512GB SSD ultrarrápido</span></li>
+                    <li class="flex items-center space-x-2"><i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i><span>Pantalla Full HD de 14 pulgadas con tecnología IPS</span></li>
+                    <li class="flex items-center space-x-2"><i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i><span>Batería de hasta 12 horas de autonomía</span></li>
+                    <li class="flex items-center space-x-2"><i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i><span>Teclado retroiluminado y lector de huellas dactilares</span></li>
+                </ul>
+                <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 focus:outline-none flex items-center justify-center space-x-2">
+                    <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+                    <span>Añadir al Carrito</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Sección de Productos Relacionados (opcional, para una tienda real) -->
+        <section class="mt-16">
+            <h3 class="text-3xl font-bold text-gray-800 mb-8 text-center">Productos Relacionados</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Producto Relacionado 1 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+                    <img src="https://placehold.co/300x200/d1fae5/065f46?text=Smartphone" alt="Smartphone Relacionado" class="w-full h-32 object-cover">
+                    <div class="p-4">
+                        <h4 class="text-lg font-semibold text-gray-800">Smartphone Tek X</h4>
+                        <p class="text-gray-600 text-sm">$799.00</p>
+                    </div>
+                </div>
+                <!-- Producto Relacionado 2 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+                    <img src="https://placehold.co/300x200/ffe4e6/be123c?text=Auriculares" alt="Auriculares Relacionados" class="w-full h-32 object-cover">
+                    <div class="p-4">
+                        <h4 class="text-lg font-semibold text-gray-800">Auriculares ANC Pro</h4>
+                        <p class="text-gray-600 text-sm">$189.99</p>
+                    </div>
+                </div>
+                <!-- Producto Relacionado 3 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+                    <img src="https://placehold.co/300x200/fff7ed/b45309?text=Smartwatch" alt="Smartwatch Relacionado" class="w-full h-32 object-cover">
+                    <div class="p-4">
+                        <h4 class="text-lg font-semibold text-gray-800">Smartwatch FitMax</h4>
+                        <p class="text-gray-600 text-sm">$249.50</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Pie de Página -->
+    <footer class="bg-gray-900 text-white p-8 mt-16">
+        <div class="container mx-auto text-center">
+            <p class="text-lg mb-4">&copy; 2024 Teknovae. Todos los derechos reservados.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i data-lucide="facebook" class="w-7 h-7"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i data-lucide="instagram" class="w-7 h-7"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i data-lucide="twitter" class="w-7 h-7"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i data-lucide="linkedin" class="w-7 h-7"></i></a>
+            </div>
+            <p class="text-sm text-gray-500 mt-6">Diseñado con pasión por la tecnología.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Inicializar iconos de Lucide al cargar el DOM
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

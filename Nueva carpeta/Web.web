@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Elegance - Tu Tienda de Tecnología</title>
+    <!-- Incluir Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuración de la fuente Inter para todo el cuerpo -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Estilos personalizados para el scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Estilo para el banner principal con imagen de fondo */
+        .hero-banner {
+            background-image: url('https://placehold.co/1920x600/1a202c/ffffff?text=Innovacion+Tecnologica'); /* Imagen de fondo para el banner */
+            background-size: cover;
+            background-position: center;
+            height: 70vh; /* Altura del banner */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.55); /* Oscurece la imagen para que el texto sea legible */
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            padding: 2rem;
+            max-width: 900px;
+        }
+    </style>
+    <!-- Incluir iconos de Lucide (para un toque moderno) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen">
+
+    <!-- Encabezado de la Página -->
+    <header class="bg-white shadow-lg p-4 sticky top-0 z-10">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-3xl font-extrabold text-indigo-700">Tech Elegance</h1>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="#home" class="text-gray-700 hover:text-indigo-600 transition duration-300 font-medium">Inicio</a></li>
+                    <li><a href="#features" class="text-gray-700 hover:text-indigo-600 transition duration-300 font-medium">Características</a></li>
+                    <li><a href="#about" class="text-gray-700 hover:text-indigo-600 transition duration-300 font-medium">Sobre Nosotros</a></li>
+                    <li><a href="#contact" class="text-gray-700 hover:text-indigo-600 transition duration-300 font-medium">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Sección del Banner Principal (Hero) -->
+    <section id="home" class="hero-banner">
+        <div class="hero-content">
+            <h2 class="text-5xl md:text-7xl font-extrabold mb-4 leading-tight drop-shadow-lg">Explora la Cima de la Innovación</h2>
+            <p class="text-lg md:text-xl mb-8 opacity-95 drop-shadow-md">
+                Descubre dispositivos que transforman tu día a día con diseño y rendimiento excepcionales.
+            </p>
+            <a href="#features" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full shadow-xl transform hover:scale-105 transition duration-300 ease-in-out inline-block">
+                Ver Novedades
+            </a>
+        </div>
+    </section>
+
+    <!-- Contenido Principal -->
+    <main class="container mx-auto p-6 flex-grow">
+
+        <!-- Sección de Características/Productos Destacados -->
+        <section id="features" class="mb-20 pt-12">
+            <h2 class="text-4xl font-extrabold text-center text-gray-800 mb-12">Nuestras Soluciones Tecnológicas</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- Tarjeta de Característica 1 -->
+                <div class="bg-white rounded-xl shadow-xl p-8 text-center border border-gray-200 transform hover:translate-y-[-5px] transition duration-300">
+                    <i data-lucide="monitor" class="w-16 h-16 text-indigo-600 mx-auto mb-6"></i>
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-3">Pantallas de Última Generación</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Sumérgete en colores vibrantes y detalles nítidos con nuestros monitores y televisores de alta definición.
+                    </p>
+                </div>
+                <!-- Tarjeta de Característica 2 -->
+                <div class="bg-white rounded-xl shadow-xl p-8 text-center border border-gray-200 transform hover:translate-y-[-5px] transition duration-300">
+                    <i data-lucide="cpu" class="w-16 h-16 text-indigo-600 mx-auto mb-6"></i>
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-3">Rendimiento Imparable</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Equipos con procesadores de vanguardia para que tu trabajo y entretenimiento fluyan sin interrupciones.
+                    </p>
+                </div>
+                <!-- Tarjeta de Característica 3 -->
+                <div class="bg-white rounded-xl shadow-xl p-8 text-center border border-gray-200 transform hover:translate-y-[-5px] transition duration-300">
+                    <i data-lucide="battery-charging" class="w-16 h-16 text-indigo-600 mx-auto mb-6"></i>
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-3">Autonomía Extendida</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Dispositivos diseñados para acompañarte todo el día, con baterías de larga duración y carga rápida.
+                    </p>
+                </div>
+                <!-- Tarjeta de Característica 4 -->
+                <div class="bg-white rounded-xl shadow-xl p-8 text-center border border-gray-200 transform hover:translate-y-[-5px] transition duration-300">
+                    <i data-lucide="cloud" class="w-16 h-16 text-indigo-600 mx-auto mb-6"></i>
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-3">Conectividad Total</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Mantente conectado con la última tecnología Wi-Fi, Bluetooth y 5G para una experiencia fluida.
+                    </p>
+                </div>
+                <!-- Tarjeta de Característica 5 -->
+                <div class="bg-white rounded-xl shadow-xl p-8 text-center border border-gray-200 transform hover:translate-y-[-5px] transition duration-300">
+                    <i data-lucide="camera" class="w-16 h-16 text-indigo-600 mx-auto mb-6"></i>
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-3">Fotografía Profesional</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Captura cada momento con cámaras de alta resolución y funciones avanzadas en nuestros smartphones.
+                    </p>
+                </div>
+                <!-- Tarjeta de Característica 6 -->
+                <div class="bg-white rounded-xl shadow-xl p-8 text-center border border-gray-200 transform hover:translate-y-[-5px] transition duration-300">
+                    <i data-lucide="shield-check" class="w-16 h-16 text-indigo-600 mx-auto mb-6"></i>
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-3">Seguridad Avanzada</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Protege tu información con características de seguridad de última generación y privacidad garantizada.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Sobre Nosotros -->
+        <section id="about" class="bg-white rounded-xl shadow-xl p-10 mb-20 border border-gray-200">
+            <h2 class="text-4xl font-extrabold text-center text-gray-800 mb-10">Nuestra Historia y Misión</h2>
+            <div class="flex flex-col md:flex-row items-center md:space-x-10">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <img src="https://placehold.co/600x400/e0e7ff/4338ca?text=Vision+Tecnologica" alt="Visión Tecnológica" class="rounded-lg shadow-md w-full h-auto object-cover">
+                </div>
+                <div class="md:w-1/2">
+                    <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                        En **Tech Elegance**, creemos que la tecnología no solo debe ser funcional, sino también una extensión elegante de tu estilo de vida. Desde nuestra fundación en 2020, nos hemos dedicado a curar una selección exclusiva de dispositivos que combinan innovación, rendimiento y un diseño impecable.
+                    </p>
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        Nuestra misión es empoderar a nuestros clientes con las herramientas del futuro, ofreciendo productos de la más alta calidad y un servicio excepcional. Cada artículo en nuestro catálogo es elegido por su capacidad de mejorar tu productividad, entretenimiento y conectividad.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Contacto -->
+        <section id="contact" class="bg-white rounded-xl shadow-xl p-10 border border-gray-200">
+            <h2 class="text-4xl font-extrabold text-center text-gray-800 mb-10">Ponte en Contacto</h2>
+            <form class="max-w-2xl mx-auto space-y-6">
+                <div>
+                    <label for="contact-name" class="block text-gray-700 text-lg font-semibold mb-2">Nombre Completo:</label>
+                    <input type="text" id="contact-name" name="name" class="shadow-sm appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="Tu Nombre">
+                </div>
+                <div>
+                    <label for="contact-email" class="block text-gray-700 text-lg font-semibold mb-2">Correo Electrónico:</label>
+                    <input type="email" id="contact-email" name="email" class="shadow-sm appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="tu@email.com">
+                </div>
+                <div>
+                    <label for="contact-subject" class="block text-gray-700 text-lg font-semibold mb-2">Asunto:</label>
+                    <input type="text" id="contact-subject" name="subject" class="shadow-sm appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="Motivo de tu consulta">
+                </div>
+                <div>
+                    <label for="contact-message" class="block text-gray-700 text-lg font-semibold mb-2">Tu Mensaje:</label>
+                    <textarea id="contact-message" name="message" rows="6" class="shadow-sm appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="Escribe aquí tu mensaje..."></textarea>
+                </div>
+                <div class="flex justify-center">
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-10 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        Enviar Mensaje
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <!-- Pie de Página -->
+    <footer class="bg-gray-900 text-white p-8 mt-16">
+        <div class="container mx-auto text-center">
+            <p class="text-lg mb-4">&copy; 2024 Tech Elegance. Todos los derechos reservados.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i data-lucide="facebook" class="w-7 h-7"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i data-lucide="instagram" class="w-7 h-7"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i data-lucide="twitter" class="w-7 h-7"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i data-lucide="linkedin" class="w-7 h-7"></i></a>
+            </div>
+            <p class="text-sm text-gray-500 mt-6">Diseñado con pasión por la tecnología.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Inicializar iconos de Lucide al cargar el DOM
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

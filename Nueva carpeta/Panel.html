@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Teknovae</title>
+    <!-- Incluir Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuración de la fuente Inter para todo el cuerpo -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Estilos personalizados para el scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+    <!-- Incluir iconos de Lucide (para un toque moderno) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, doc, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global variables for Firebase instances and user ID
+        let firebaseApp = null;
+        let db = null;
+        let auth = null;
+        let userId = null;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        // DOM elements
+        let productNameInput;
+        let productDescriptionInput;
+        let productPriceInput;
+        let productImageUrlInput;
+        let addProductButton;
+        let productsTableBody;
+        let userIdDisplay;
+        let loadingMessage;
+
+        /**
+         * Initializes Firebase and sets up authentication.
+         */
+        async function initializeFirebase() {
+            try {
+                const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+                firebaseApp = initializeApp(firebaseConfig);
+                db = getFirestore(firebaseApp);
+                auth = getAuth(firebaseApp);
+
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        userIdDisplay.textContent = `ID de Usuario (Admin): ${userId}`;
+                        console.log("Usuario autenticado:", userId);
+                        loadProducts(); // Load products once authenticated
+                    } else {
+                        try {
+                            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                                await signInWithCustomToken(auth, __initial_auth_token);
+                                console.log("Signed in with custom token.");
+                            } else {
+                                await signInAnonymously(auth);
+                                console.log("Signed in anonymously.");
+                            }
+                        } catch (error) {
+                            console.error("Error during authentication:", error);
+                            userIdDisplay.textContent = `Error de autenticación`;
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error("Error initializing Firebase:", error);
+                userIdDisplay.textContent = `Error de inicialización de Firebase`;
+            }
+        }
+
+        /**
+         * Adds a new product to Firestore.
+         * @param {Event} event - The form submission event.
+         */
+        async function addProduct(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            if (!db) {
+                console.error("Firestore no está inicializado.");
+                return;
+            }
+
+            const name = productNameInput.value.trim();
+            const description = productDescriptionInput.value.trim();
+            const price = parseFloat(productPriceInput.value);
+            const imageUrl = productImageUrlInput.value.trim();
+
+            if (!name || !description || isNaN(price) || price <= 0 || !imageUrl) {
+                alert("Por favor, rellena todos los campos correctamente.");
+                return;
+            }
+
+            try {
+                // Products collection is public data for the e-commerce store
+                const productsCollectionRef = collection(db, `artifacts/${appId}/public/data/products`);
+                await addDoc(productsCollectionRef, {
+                    name,
+                    description,
+                    price,
+                    imageUrl,
+                    createdAt: new Date() // Add a timestamp
+                });
+                console.log("Producto añadido con éxito.");
+                // Clear form fields
+                productNameInput.value = '';
+                productDescriptionInput.value = '';
+                productPriceInput.value = '';
+                productImageUrlInput.value = '';
+            } catch (e) {
+                console.error("Error añadiendo producto: ", e);
+                alert("Error al añadir el producto. Consulta la consola para más detalles.");
+            }
+        }
+
+        /**
+         * Deletes a product from Firestore.
+         * @param {string} productId - The ID of the product to delete.
+         */
+        async function deleteProduct(productId) {
+            if (!db) {
+                console.error("Firestore no está inicializado.");
+                return;
+            }
+
+            if (!confirm("¿Estás seguro de que quieres eliminar este producto?")) {
+                return; // User cancelled
+            }
+
+            try {
+                const productDocRef = doc(db, `artifacts/${appId}/public/data/products`, productId);
+                await deleteDoc(productDocRef);
+                console.log("Producto eliminado con éxito:", productId);
+            } catch (e) {
+                console.error("Error eliminando producto: ", e);
+                alert("Error al eliminar el producto. Consulta la consola para más detalles.");
+            }
+        }
+
+        /**
+         * Loads products from Firestore and renders them in the table.
+         * Sets up a real-time listener.
+         */
+        function loadProducts() {
+            if (!db) {
+                console.error("Firestore no está inicializado para cargar productos.");
+                return;
+            }
+
+            const productsCollectionRef = collection(db, `artifacts/${appId}/public/data/products`);
+            onSnapshot(productsCollectionRef, (snapshot) => {
+                productsTableBody.innerHTML = ''; // Clear existing table rows
+                loadingMessage.classList.add('hidden'); // Hide loading message
+
+                if (snapshot.empty) {
+                    productsTableBody.innerHTML = `<tr><td colspan="5" class="py-4 text-center text-gray-500">No hay productos en la base de datos.</td></tr>`;
+                    return;
+                }
+
+                snapshot.docs.forEach(docSnapshot => {
+                    const product = { id: docSnapshot.id, ...docSnapshot.data() };
+                    const row = productsTableBody.insertRow();
+                    row.className = 'border-b border-gray-200 hover:bg-gray-50';
+
+                    row.insertCell(0).textContent = product.name;
+                    row.insertCell(1).textContent = product.description;
+                    row.insertCell(2).textContent = `$${product.price.toFixed(2)}`;
+                    const imgCell = row.insertCell(3);
+                    const img = document.createElement('img');
+                    img.src = product.imageUrl || 'https://placehold.co/50x50/cccccc/333333?text=No+Img';
+                    img.alt = product.name;
+                    img.className = 'w-12 h-12 object-cover rounded-md';
+                    imgCell.appendChild(img);
+
+                    const actionsCell = row.insertCell(4);
+                    const deleteButton = document.createElement('button');
+                    deleteButton.className = 'text-red-600 hover:text-red-800 transition duration-300 focus:outline-none';
+                    deleteButton.innerHTML = '<i data-lucide="trash-2" class="w-5 h-5"></i>';
+                    deleteButton.addEventListener('click', () => deleteProduct(product.id));
+                    actionsCell.appendChild(deleteButton);
+                });
+                lucide.createIcons(); // Re-render Lucide icons for new elements
+            }, (error) => {
+                console.error("Error obteniendo productos de Firestore:", error);
+                loadingMessage.textContent = "Error al cargar productos.";
+            });
+        }
+
+        // Initialize DOM elements and Firebase when the document is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get DOM elements
+            productNameInput = document.getElementById('product-name');
+            productDescriptionInput = document.getElementById('product-description');
+            productPriceInput = document.getElementById('product-price');
+            productImageUrlInput = document.getElementById('product-image-url');
+            addProductButton = document.getElementById('add-product-button');
+            productsTableBody = document.getElementById('products-table-body');
+            userIdDisplay = document.getElementById('user-id-display');
+            loadingMessage = document.getElementById('loading-message');
+
+            // Add event listener for form submission
+            document.getElementById('add-product-form').addEventListener('submit', addProduct);
+
+            // Initialize Firebase
+            initializeFirebase();
+
+            // Initialize Lucide icons for static elements
+            lucide.createIcons();
+        });
+    </script>
+</head>
+<body class="bg-gray-100 text-gray-900 flex flex-col min-h-screen">
+
+    <!-- Encabezado del Panel -->
+    <header class="bg-indigo-700 text-white shadow-lg p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-3xl font-bold">Panel de Administración Teknovae</h1>
+            <p id="user-id-display" class="text-sm text-indigo-200">Cargando ID de Usuario...</p>
+        </div>
+    </header>
+
+    <!-- Contenido Principal del Panel -->
+    <main class="container mx-auto p-6 flex-grow">
+        <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Añadir Nuevo Producto</h2>
+            <form id="add-product-form" class="max-w-xl mx-auto space-y-4">
+                <div>
+                    <label for="product-name" class="block text-gray-700 text-sm font-bold mb-2">Nombre del Producto:</label>
+                    <input type="text" id="product-name" class="shadow-sm appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                </div>
+                <div>
+                    <label for="product-description" class="block text-gray-700 text-sm font-bold mb-2">Descripción:</label>
+                    <textarea id="product-description" rows="3" class="shadow-sm appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500" required></textarea>
+                </div>
+                <div>
+                    <label for="product-price" class="block text-gray-700 text-sm font-bold mb-2">Precio:</label>
+                    <input type="number" id="product-price" step="0.01" min="0" class="shadow-sm appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                </div>
+                <div>
+                    <label for="product-image-url" class="block text-gray-700 text-sm font-bold mb-2">URL de la Imagen:</label>
+                    <input type="url" id="product-image-url" class="shadow-sm appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="https://ejemplo.com/imagen.jpg" required>
+                </div>
+                <div class="flex justify-center">
+                    <button type="submit" id="add-product-button" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transform hover:scale-105 transition duration-300 focus:outline-none">
+                        <i data-lucide="plus-circle" class="inline-block w-5 h-5 mr-2"></i> Añadir Producto
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg p-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Lista de Productos</h2>
+            <p id="loading-message" class="text-center text-gray-500 py-4">Cargando productos...</p>
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                    <thead>
+                        <tr class="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
+                            <th class="py-3 px-6 text-left">Nombre</th>
+                            <th class="py-3 px-6 text-left">Descripción</th>
+                            <th class="py-3 px-6 text-left">Precio</th>
+                            <th class="py-3 px-6 text-left">Imagen</th>
+                            <th class="py-3 px-6 text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="products-table-body" class="text-gray-700 text-sm font-light">
+                        <!-- Los productos se cargarán aquí dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Pie de Página -->
+    <footer class="bg-gray-800 text-white p-6 mt-8">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Teknovae Admin. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>
